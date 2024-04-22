@@ -9,13 +9,13 @@ from selenium import webdriver
 import time
 import logging
 import openai
-import requests
+
 from webdriver_confi import webdriver_config
 from dotenv import load_dotenv
 import os
-import pyperclip
+
 import glob
-import base64
+
 
 # Load environment variables from .env file
 load_dotenv()
