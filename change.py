@@ -24,7 +24,7 @@ app = FastAPI()
 openai.api_key = os.getenv("OPENAI_API_KEY", "default_openai_api_key")
 
 class LoomRequest(BaseModel):
-    video_url: str
+    page_url: str
     # prompt: str
 
 logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
@@ -33,13 +33,15 @@ def login(driver):
     for _ in range(5):  # Try logging in 3 times
         try:
             driver.get("https://platform.fullcontact.com/login")
+            emailAdd = "hello@onenine.com"
+            password = "6uVX3M&1P5]48uN"
             # Find and fill email input
             email_input = WebDriverWait(driver, 10).until(
             EC.element_to_be_clickable((By.ID, "login-email"))
             )
             email_input.clear()
             time.sleep(1)  # Add a small delay before sending keys
-            email_input.send_keys("hello@onenine.com")
+            email_input.send_keys(emailAdd)
 
             # Find and fill password input
             password_input = WebDriverWait(driver, 10).until(
@@ -47,7 +49,7 @@ def login(driver):
             )
             password_input.clear()
             time.sleep(1)  # Add a small delay before sending keys
-            password_input.send_keys("6uVX3M&1P5]48uN")
+            password_input.send_keys(password)
 
             # Click submit button
             submit_button = driver.find_element(By.CSS_SELECTOR, "#app > div > div > div:nth-child(3) > form > div:nth-child(1) > div:nth-child(2) > div:nth-child(4) > button")
@@ -110,8 +112,8 @@ async def download_FullReport(request: LoomRequest):
         driver.quit()
         return {"error": "Failed to login after multiple attempts."}
 
-    # driver.get(request.video_url)
-    # logging.debug(f'Navigating to video URL: {request.video_url}')
+    # driver.get(request.page_url)
+    # logging.debug(f'Navigating to video URL: {request.page_url}')
     # time.sleep(10)
     # try:
     #     # Assuming these elements are present on the login page, locate them and interact with them directly
@@ -286,8 +288,8 @@ async def download_FullReport(request: LoomRequest):
     
 #     wait = WebDriverWait(driver, 20)
     
-#     driver.get(request.video_url)
-#     logging.debug(f'Navigating to video URL: {request.video_url}')
+#     driver.get(request.page_url)
+#     logging.debug(f'Navigating to video URL: {request.page_url}')
 #     time.sleep(10)
 #     try:
 #         # Assuming these elements are present on the login page, locate them and interact with them directly
